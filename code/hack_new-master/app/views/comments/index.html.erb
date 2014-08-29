@@ -1,0 +1,27 @@
+<h1>Comments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Comment.all.each do |comment| %>
+      <% if (comment.commentable_type == "Link") %>
+        <tr><td>Comment <%= comment.id %>: <%= comment.content %>  <%= link_to "Comment", new_comment_comment_path(comment), :class => "btn btn-warning btn-xs" %></td></tr>
+      <% end %>
+      <% Comment.all.each do |child| %>
+        <% if (child.commentable_type == "Comment") && (child.commentable_id == comment.id) %>
+          <ul>
+            <tr><td><li><%= child.content %><%= link_to "Comment", new_comment_comment_path(comment), :class => "btn btn-warning btn-xs" %></li></td></tr>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
